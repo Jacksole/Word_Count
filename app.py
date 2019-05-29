@@ -38,7 +38,7 @@ def count_and_save_words(url):
         return {"error": errors}
 
     # text processing
-    raw = BeautifulSoup(r.text, 'html.parser').get_text()
+    raw = BeautifulSoup(r.text).get_text()
     nltk.data.path.append('./nltk_data/')  # set the path
     tokens = nltk.word_tokenize(raw)
     text = nltk.Text(tokens)
@@ -69,7 +69,18 @@ def count_and_save_words(url):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    results = {}
+    if request.method == "POST":
+        # get url that the person has entered
+        url = request.form['url']
+        if 'http://' not in url[:7]:
+            url = 'http://' + url
+        job = q.enqueue_call(
+            func=count_and_save_words, args=(url,), result_ttl=5000
+        )
+        print(job.get_id())
+
+    return render_template('index.html', results=results)
 
 
 @app.route('/start', methods=['POST'])

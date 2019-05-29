@@ -14,7 +14,6 @@ from collections import Counter
 from bs4 import BeautifulSoup
 from flask import jsonify
 
-
 app = Flask(__name__)
 # app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True

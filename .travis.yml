@@ -7,6 +7,10 @@ python:
   - "nightly"  # nightly build
 virtualenv:
   system_site_packages: true
+before_install:
+  - pip install --user codecov
+after_success:
+  - codecov --file coverage/lcov.info --disable search
 deploy:
   provider: heroku
   api_key:

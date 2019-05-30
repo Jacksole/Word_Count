@@ -1,0 +1,16 @@
+dist: xenial   # required for Python >= 3.7
+language: python
+python:
+  - "3.7"
+  - "3.7-dev"  # 3.7 development branch
+  - "3.8-dev"  # 3.8 development branch
+  - "nightly"  # nightly build
+virtualenv:
+  system_site_packages: true
+deploy:
+  provider: heroku
+  api_key:
+    secure: "d4eab965-c0e0-4d44-b54f-b05278faf0be"
+  app:
+    master: wordcount-stage-1125
+    production: wordcount-pro-1125
